@@ -1,0 +1,9 @@
+services:
+  tsness_mongo:
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27400:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: jeydev
+      MONGO_INITDB_ROOT_PASSWORD: tr0p5ecur3
