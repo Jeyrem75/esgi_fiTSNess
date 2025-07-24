@@ -32,11 +32,6 @@ export class ChallengeInvitationController {
             return;
         }
 
-        if (challenge.endDate < new Date()) {
-            res.status(400).json({ error: 'Challenge has already ended' });
-            return;
-        }
-
         const invitations = [];
         const errors = [];
 
@@ -95,7 +90,7 @@ export class ChallengeInvitationController {
             return;
         }
 
-        if (req.user!.role !== UserRole.SUPER_ADMIN && challenge.creator.toString() !== req.user!._id) {
+        if (req.user!.role !== UserRole.SUPER_ADMIN) {
             res.status(403).json({ error: 'Not authorized to view these invitations' });
             return;
         }
@@ -113,7 +108,12 @@ export class ChallengeInvitationController {
             return;
         }
 
-        if (invitation.receiver.toString() !== req.user!._id) {
+        const receiverId = typeof invitation.receiver === 'object' 
+        ? invitation.receiver._id.toString() 
+        : invitation.receiver.toString();
+        const currentUserId = req.user!._id.toString();
+
+        if (receiverId !== currentUserId) {
             res.status(403).json({ error: 'Not authorized to accept this invitation' });
             return;
         }
@@ -128,8 +128,12 @@ export class ChallengeInvitationController {
             return;
         }
 
-        const challenge = await this.challengeService.findChallengeById(invitation.challenge.toString());
-        if (!challenge || !challenge.isActive || challenge.endDate < new Date()) {
+        const challengeId = typeof invitation.challenge === 'object' 
+        ? invitation.challenge._id.toString() 
+        : invitation.challenge.toString();
+
+        const challenge = await this.challengeService.findChallengeById(challengeId);
+        if (!challenge || !challenge.isActive) {
             res.status(400).json({ error: 'Challenge is no longer available' });
             return;
         }
@@ -173,7 +177,12 @@ export class ChallengeInvitationController {
             return;
         }
 
-        if (invitation.receiver.toString() !== req.user!._id) {
+        const receiverId = typeof invitation.receiver === 'object' 
+        ? invitation.receiver._id.toString() 
+        : invitation.receiver.toString();
+        const currentUserId = req.user!._id.toString();
+        
+        if (receiverId !== currentUserId) {
             res.status(403).json({ error: 'Not authorized to decline this invitation' });
             return;
         }

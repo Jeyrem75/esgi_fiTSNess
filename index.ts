@@ -114,8 +114,8 @@ async function startAPI() {
     app.use('/badges', badgeController.buildRouter());
     app.use('/user-badges', userBadgeController.buildRouter());
     app.use('/workouts', workoutController.buildRouter());
-    app.use('/challenge-participations', challengeParticipationController.buildRouter());
-    app.use('/challenge-invitations', challengeInvitationController.buildRouter());
+    app.use('/participations', challengeParticipationController.buildRouter());
+    app.use('/invitations', challengeInvitationController.buildRouter());
     app.use('/friendships', friendshipController.buildRouter());
     app.use('/leaderboards', leaderboardController.buildRouter());
 

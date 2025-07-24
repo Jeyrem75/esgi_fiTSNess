@@ -38,7 +38,6 @@ class ChallengeInvitationService {
                 return null;
             }
             return this.challengeInvitationModel.findById(invitationId)
-                .populate('challenge')
                 .populate('inviter')
                 .populate('receiver');
         });

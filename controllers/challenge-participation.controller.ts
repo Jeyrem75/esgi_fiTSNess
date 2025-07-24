@@ -25,9 +25,8 @@ export class ChallengeParticipationController {
             return;
         }
 
-        const now = new Date();
-        if (challenge.startDate > now || challenge.endDate < now || !challenge.isActive) {
-            res.status(400).end();
+        if (!challenge.isActive) {
+            res.status(400).json({ error: 'Challenge is not active' });
             return;
         }
 
@@ -164,6 +163,9 @@ export class ChallengeParticipationController {
             roleMiddleware(UserRole.USER),
             json(),
             this.addWorkoutToChallenge.bind(this));
+        router.get('/stats/',
+            sessionMiddleware(this.sessionService),
+            this.getChallengeStats.bind(this));
         router.get('/stats/:userId',
             sessionMiddleware(this.sessionService),
             this.getChallengeStats.bind(this));

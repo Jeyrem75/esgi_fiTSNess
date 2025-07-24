@@ -34,9 +34,8 @@ class ChallengeParticipationController {
                 res.status(409).end();
                 return;
             }
-            const now = new Date();
-            if (challenge.startDate > now || challenge.endDate < now || !challenge.isActive) {
-                res.status(400).end();
+            if (!challenge.isActive) {
+                res.status(400).json({ error: 'Challenge is not active' });
                 return;
             }
             try {
@@ -149,6 +148,7 @@ class ChallengeParticipationController {
         router.post('/challenge/:challengeId/complete', (0, middlewares_1.sessionMiddleware)(this.sessionService), (0, middlewares_1.roleMiddleware)(models_1.UserRole.USER), (0, express_1.json)(), this.completeChallenge.bind(this));
         router.delete('/challenge/:challengeId/leave', (0, middlewares_1.sessionMiddleware)(this.sessionService), (0, middlewares_1.roleMiddleware)(models_1.UserRole.USER), this.leaveChallenge.bind(this));
         router.post('/challenge/:challengeId/workout', (0, middlewares_1.sessionMiddleware)(this.sessionService), (0, middlewares_1.roleMiddleware)(models_1.UserRole.USER), (0, express_1.json)(), this.addWorkoutToChallenge.bind(this));
+        router.get('/stats/', (0, middlewares_1.sessionMiddleware)(this.sessionService), this.getChallengeStats.bind(this));
         router.get('/stats/:userId', (0, middlewares_1.sessionMiddleware)(this.sessionService), this.getChallengeStats.bind(this));
         return router;
     }
