@@ -52,25 +52,6 @@ export class AuthController {
                 fitnessLevel: req.body.fitnessLevel,
                 goals: req.body.goals || [],
                 totalScore: 0,
-                preferences: {
-                    notifications: {
-                        challengeInvites: true,
-                        friendRequests: true,
-                        achievements: true,
-                        workoutReminders: true,
-                        challengeUpdates: true
-                    },
-                    privacy: {
-                        profileVisibility: ProfileVisibility.PUBLIC,
-                        workoutVisibility: WorkoutVisibility.FRIENDS_ONLY,
-                        friendsListVisibility: FriendsListVisibility.FRIENDS_ONLY
-                    },
-                    units: {
-                        weight: WeightUnit.KG,
-                        distance: DistanceUnit.KM,
-                        temperature: TemperatureUnit.CELSIUS
-                    }
-                }
             });
             res.status(201).json(user);
         } catch {

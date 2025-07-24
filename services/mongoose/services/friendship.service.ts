@@ -11,10 +11,10 @@ export class FriendshipService {
         this.friendshipModel = connection.model('Friendship', friendshipSchema());
     }
 
-    async sendFriendRequest(requesterId: string, addresseeId: string): Promise<Friendship> {
+    async sendFriendRequest(requesterId: string, receiverId: string): Promise<Friendship> {
         return this.friendshipModel.create({
             requester: requesterId,
-            addressee: addresseeId,
+            receiver: receiverId,
             status: FriendshipStatus.PENDING
         });
     }
@@ -55,8 +55,8 @@ export class FriendshipService {
         }
         await this.friendshipModel.deleteMany({
             $or: [
-                { requester: userId1, addressee: userId2 },
-                { requester: userId2, addressee: userId1 }
+                { requester: userId1, receiver: userId2 },
+                { requester: userId2, receiver: userId1 }
             ]
         });
     }
@@ -68,9 +68,9 @@ export class FriendshipService {
         return this.friendshipModel.find({
             $or: [
                 { requester: userId, status: FriendshipStatus.ACCEPTED },
-                { addressee: userId, status: FriendshipStatus.ACCEPTED }
+                { receiver: userId, status: FriendshipStatus.ACCEPTED }
             ]
-        }).populate('requester').populate('addressee');
+        }).populate('requester').populate('receiver');
     }
 
     async findPendingRequests(userId: string): Promise<Friendship[]> {
@@ -78,9 +78,9 @@ export class FriendshipService {
             return [];
         }
         return this.friendshipModel.find({
-            addressee: userId,
+            receiver: userId,
             status: FriendshipStatus.PENDING
-        }).populate('requester').populate('addressee');
+        }).populate('requester').populate('receiver');
     }
 
     async findSentRequests(userId: string): Promise<Friendship[]> {
@@ -90,7 +90,7 @@ export class FriendshipService {
         return this.friendshipModel.find({
             requester: userId,
             status: FriendshipStatus.PENDING
-        }).populate('requester').populate('addressee');
+        }).populate('requester').populate('receiver');
     }
 
     async areFriends(userId1: string, userId2: string): Promise<boolean> {
@@ -99,8 +99,8 @@ export class FriendshipService {
         }
         const friendship = await this.friendshipModel.findOne({
             $or: [
-                { requester: userId1, addressee: userId2, status: FriendshipStatus.ACCEPTED },
-                { requester: userId2, addressee: userId1, status: FriendshipStatus.ACCEPTED }
+                { requester: userId1, receiver: userId2, status: FriendshipStatus.ACCEPTED },
+                { requester: userId2, receiver: userId1, status: FriendshipStatus.ACCEPTED }
             ]
         });
         return !!friendship;

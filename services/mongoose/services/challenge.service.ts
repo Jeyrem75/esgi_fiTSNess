@@ -55,9 +55,7 @@ export class ChallengeService {
     async findActiveChallenges(): Promise<Challenge[]> {
         const now = new Date();
         return this.challengeModel.find({
-            isActive: true,
-            startDate: { $lte: now },
-            endDate: { $gte: now }
+            isActive: true
         })
             .populate('creator')
             .populate('gym')

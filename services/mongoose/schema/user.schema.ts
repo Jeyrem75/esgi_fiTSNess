@@ -77,33 +77,41 @@ export function userSchema(): Schema<User> {
         },
         isActive: {
             type: Boolean,
-            default: true
+            default: true,
+            required: true
         },
         profileImage: {
-            type: String
+            type: String,
+            required: false
         },
         dateOfBirth: {
-            type: Date
+            type: Date,
+            required: false
         },
         height: {
-            type: Number
+            type: Number,
+            required: false
         },
         weight: {
-            type: Number
+            type: Number,
+            required: false
         },
         fitnessLevel: {
             type: String,
-            enum: Object.values(FitnessLevel)
+            enum: Object.values(FitnessLevel),
+            required: false
         },
         goals: [{
             type: String
         }],
         totalScore: {
             type: Number,
-            default: 0
+            default: 0,
+            required: false
         },
         preferences: {
             type: userPreferencesSchema,
+            required: false,
             default: () => ({
                 notifications: {
                     challengeInvites: true,

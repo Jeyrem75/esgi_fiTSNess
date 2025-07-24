@@ -110,7 +110,10 @@ export class WorkoutController {
             sessionMiddleware(this.sessionService),
             roleMiddleware(UserRole.USER),
             this.getMyWorkoutSessions.bind(this));
-        router.get('/stats/:userId?',
+        router.get('/stats',
+            sessionMiddleware(this.sessionService),
+            this.getUserStats.bind(this));
+        router.get('/stats/:userId',
             sessionMiddleware(this.sessionService),
             this.getUserStats.bind(this));
         router.get('/:id',

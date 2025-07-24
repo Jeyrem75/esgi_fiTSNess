@@ -7,5 +7,6 @@ export * from './badge.controller';
 export * from './user-badge.controller';
 export * from './workout.controller';
 export * from './challenge-participation.controller';
+export * from './challenge-invitation.controller';
 export * from './friendship.controller';
 export * from './leaderboard.controller';

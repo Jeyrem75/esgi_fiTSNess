@@ -71,10 +71,15 @@ export class GymController {
             res.status(404).end();
             return;
         }
-        if (req.user!.role !== UserRole.SUPER_ADMIN && gym.owner.toString() !== req.user!._id) {
-            res.status(403).end();
-            return;
+
+        if (req.user!.role !== UserRole.SUPER_ADMIN) {
+            const gymOwnerId = typeof gym.owner === 'object' ? gym.owner._id.toString() : gym.owner.toString();
+            if (gymOwnerId !== req.user!._id) {
+                res.status(403).end();
+                return;
+            }
         }
+        
         const updatedGym = await this.gymService.updateGym(req.params.id, req.body);
         res.json(updatedGym);
     }
@@ -85,7 +90,7 @@ export class GymController {
             res.status(404).end();
             return;
         }
-        if (req.user!.role !== UserRole.SUPER_ADMIN && gym.owner.toString() !== req.user!._id) {
+        if (req.user!.role !== UserRole.SUPER_ADMIN) {
             res.status(403).end();
             return;
         }

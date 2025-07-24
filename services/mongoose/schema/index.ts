@@ -8,5 +8,6 @@ export * from './badge.schema';
 export * from './user-badge.schema';
 export * from './workout.schema';
 export * from './challenge-participation.schema';
+export * from './challenge-invitation.schema';
 export * from './friendship.schema';
 export * from './leaderboard.schema';

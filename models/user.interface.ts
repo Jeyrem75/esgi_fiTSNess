@@ -97,6 +97,6 @@ export interface User extends Timestamps {
     weight?: number;
     fitnessLevel?: FitnessLevel;
     goals?: string[];
-    totalScore: number;
-    preferences: UserPreferences;
+    totalScore?: number;
+    preferences?: UserPreferences;
 }

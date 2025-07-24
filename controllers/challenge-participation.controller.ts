@@ -164,7 +164,7 @@ export class ChallengeParticipationController {
             roleMiddleware(UserRole.USER),
             json(),
             this.addWorkoutToChallenge.bind(this));
-        router.get('/stats/:userId?',
+        router.get('/stats/:userId',
             sessionMiddleware(this.sessionService),
             this.getChallengeStats.bind(this));
         return router;

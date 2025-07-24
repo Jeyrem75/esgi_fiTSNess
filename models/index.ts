@@ -11,5 +11,6 @@ export * from './badge-rule.interface';
 export * from './user-badge.interface';
 export * from './workout.interface';
 export * from './challenge-participation.interface';
+export * from './challenge-invitation.interface';
 export * from './friendship.interface';
 export * from './leaderboard.interface';

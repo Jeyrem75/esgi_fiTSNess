@@ -1,16 +1,14 @@
 import {Mongoose, Model, FilterQuery, isValidObjectId} from "mongoose";
-import {Badge, UserBadge, BadgeRarity} from "../../../models";
-import {badgeSchema, userBadgeSchema} from "../schema";
+import {Badge, BadgeRarity} from "../../../models";
+import {badgeSchema} from "../schema";
 
 export type CreateBadge = Omit<Badge, '_id' | 'createdAt' | 'updatedAt'>;
 
 export class BadgeService {
     readonly badgeModel: Model<Badge>;
-    readonly userBadgeModel: Model<UserBadge>;
 
     constructor(public readonly connection: Mongoose) {
         this.badgeModel = connection.model('Badge', badgeSchema());
-        this.userBadgeModel = connection.model('UserBadge', userBadgeSchema());
     }
 
     async createBadge(badge: CreateBadge): Promise<Badge> {

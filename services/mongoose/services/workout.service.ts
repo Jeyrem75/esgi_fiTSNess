@@ -1,16 +1,14 @@
 import {Mongoose, Model, FilterQuery, isValidObjectId} from "mongoose";
-import {WorkoutSession, ChallengeParticipation} from "../../../models";
-import {workoutSessionSchema, challengeParticipationSchema} from "../schema";
+import {WorkoutSession} from "../../../models";
+import {workoutSessionSchema} from "../schema";
 
 export type CreateWorkoutSession = Omit<WorkoutSession, '_id' | 'createdAt' | 'updatedAt'>;
 
 export class WorkoutService {
     readonly workoutSessionModel: Model<WorkoutSession>;
-    readonly challengeParticipationModel: Model<ChallengeParticipation>;
 
     constructor(public readonly connection: Mongoose) {
         this.workoutSessionModel = connection.model('WorkoutSession', workoutSessionSchema());
-        this.challengeParticipationModel = connection.model('ChallengeParticipation', challengeParticipationSchema());
     }
 
     async createWorkoutSession(session: CreateWorkoutSession): Promise<WorkoutSession> {
